@@ -1,6 +1,6 @@
 module.exports = {
     css: {
-      loaderOptions: {
+        loaderOptions: {
             scss: {
                 additionalData: `@import "~@/assets/scss/vars.scss";`
             }
