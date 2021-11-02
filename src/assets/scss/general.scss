@@ -1,0 +1,39 @@
+.page {
+    font-family: "Roboto", "Arial", sans-serif;
+    padding-top: 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+.title {
+    font-size: 36px;
+    margin: 0;
+    margin-bottom: 40px;
+}
+
+.button {
+    font-size: 16px;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 6px 12px;
+    transition: all 0.2s ease-in-out;
+}
