@@ -1,7 +1,7 @@
 <template>
     <router-link
         class="hotel-card"
-        :to="{ name: 'hotel', params: { id: info.id } }"
+        :to="{ name: 'hotels.item', params: { id: info.id } }"
     >
         <article class="hotel-card__article">
             <!--

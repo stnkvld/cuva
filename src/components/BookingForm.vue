@@ -48,10 +48,7 @@
             </LabelGroup>
         </p>
 
-        <p v-if="submitted" class="booking-form__success">
-            Форма успешно отправлена
-        </p>
-        <button v-else class="button button--accent" type="submit">
+        <button class="button button--accent" type="submit">
             Отправить
         </button>
     </form>
@@ -124,7 +121,11 @@ export default {
             // В задании не уточняется как именно должна имитироваться отправка формв,
             // поэтому оставил таким образом.
             // Обычно, вызывается метод API или dispatch, передаются данные формы и отправляется запрос с ними
-            this.submitted = true;
+            this.$emit('submit', {
+                address: this.address,
+                name: this.name,
+                phone: this.phone
+            });
         }
     }
 }
@@ -145,13 +146,6 @@ export default {
     &__group {
         margin: 0;
         margin-bottom: 20px;
-    }
-
-    &__success {
-        font-size: 18px;
-        text-align: center;
-        color: $color-success;
-        margin: 0;
     }
 }
 </style>

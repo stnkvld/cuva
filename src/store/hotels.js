@@ -16,6 +16,9 @@ export default {
             }
 
             return state.items.slice(0, page * 10);
+        },
+        item: (state) => (id) => {
+            return state.items.find(item => item.id === id);
         }
     },
 
@@ -30,6 +33,7 @@ export default {
             try {
                 const hotels = await getHotelsInfo();
                 commit('SET_ITEMS', hotels);
+                localStorage.setItem('hotels', JSON.stringify(hotels));
             } catch (error) {
                 // Предполагается обработка ошибки и ее вывод в общие уведомления
                 console.error(error);

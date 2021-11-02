@@ -1,7 +1,7 @@
 .page {
     font-family: "Roboto", "Arial", sans-serif;
     color: $color-basic-text;
-    padding-top: 40px;
+    padding: 40px 0;
 }
 
 .container {
@@ -47,5 +47,14 @@
             color: $color-basic;
             background-color: $color-accent;
         }
+    }
+}
+
+.link {
+    display: inline-block;
+    text-decoration: none;
+
+    &--accent {
+        color: $color-accent;
     }
 }
