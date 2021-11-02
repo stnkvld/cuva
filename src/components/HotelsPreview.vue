@@ -1,6 +1,7 @@
 <template>
-    <div class="hotels-preview">
-        <!-- <ul class="hotels-preview__list"> -->
+    <div
+        class="hotels-preview"
+    >
         <transition-group
             class="hotels-preview__list"
             name="list"
@@ -16,11 +17,10 @@
                     :info="hotelItem"
                 />
             </li>
-        <!-- </ul> -->
         </transition-group>
         <button
-            v-show="page < 3"
-            class="button hotels-preview__show-more"
+            v-show="hotels.length > 0 && page < 3"
+            class="button button--accent"
             type="button"
             @click="page++"
         >
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 import HotelCard from '@/components/HotelCard.vue'
 
 export default {
@@ -47,8 +49,19 @@ export default {
             return this.$store.getters['hotels/itemsForPreview'](this.page);
         }
     },
+    methods: {
+        ...mapMutations({
+            setHotels: 'hotels/SET_ITEMS'
+        })
+    },
     created() {
-        this.$store.dispatch('hotels/fetchItems');
+        const lsHotels = localStorage.getItem('hotels');
+
+        if (lsHotels) {
+            this.setHotels(JSON.parse(lsHotels));
+        } else {
+            this.$store.dispatch('hotels/fetchItems')
+        }
     }
 };
 </script>
@@ -76,17 +89,6 @@ export default {
 
     &__item:not(:last-child) {
         margin-bottom: 20px;
-    }
-
-    &__show-more {
-        color: $color-accent;
-        border: 2px solid $color-accent;
-        border-radius: 6px;
-    }
-
-    &__show-more:hover {
-        color: $color-basic;
-        background-color: $color-accent;
     }
 }
 
