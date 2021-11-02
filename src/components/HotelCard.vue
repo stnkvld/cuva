@@ -5,9 +5,13 @@
     >
         <article class="hotel-card__article">
             <!--
-                В идеале Picture нужновынести в отдельный компонент,
+                В идеале Picture нужно вынести в отдельный компонент,
                 но в данном случае оставил внутри данного, чтобы
-                сэкономить время
+                сэкономить время.
+
+                Также стоит добавить более наглядный lazyloading
+                изображений, т.е. добавить некий плэйсхолдер, пока
+                изображение загружается
             -->
             <picture class="hotel-card__picture">
                 <source
@@ -49,7 +53,7 @@ export default {
 <style lang="scss">
     .hotel-card {
         display: block;
-        color: $color;
+        color: $color-basic-text;
         text-decoration: none;
 
         &__image {

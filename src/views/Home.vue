@@ -1,18 +1,19 @@
 <template>
   <section class="home">
     <div class="container">
-      <HotelCard :info="{ title: 'Test Title', body: 'Test Description' }" />
+      <h1 class="title">Бронирование отелей</h1>
+      <HotelsPreview />
     </div>
   </section>
 </template>
 
 <script>
-import HotelCard from '@/components/HotelCard.vue'
+import HotelsPreview from '@/components/HotelsPreview.vue'
 
 export default {
   name: 'Home',
   components: {
-    HotelCard
+    HotelsPreview
   },
   data() {
     return {
