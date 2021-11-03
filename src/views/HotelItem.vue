@@ -25,7 +25,7 @@
                 </p>
             </div>
 
-            <transition name="fade">
+            <transition name="fade" mode="out-in">
                 <BookingForm
                     v-if="showForm"
                     class="hotel__booking-form"
