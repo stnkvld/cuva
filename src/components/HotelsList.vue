@@ -1,28 +1,33 @@
 <template>
     <div
-        class="hotels-preview"
+        class="hotels-list"
     >
         <transition-group
-            class="hotels-preview__list"
+            class="hotels-list__list"
             name="list"
             tag="ul"
         >
             <li
                 v-for="(hotelItem, hotelIdx) in hotels"
                 :key="`h-${hotelIdx}`"
-                class="hotels-preview__item"
+                class="hotels-list__item"
             >
-                <HotelCard
-                    class="hotels-preview__card"
-                    :info="hotelItem"
-                />
+                <router-link
+                    class="hotels-list__link"
+                    :to="{ name: 'hotels.item', params: { id: hotelItem.id } }"
+                >
+                    <HotelCard
+                        class="hotels-list__card"
+                        :hotel="hotelItem"
+                    />
+                </router-link>
             </li>
         </transition-group>
         <button
             v-show="hotels.length > 0 && page < 3"
             class="button button--accent"
             type="button"
-            @click="page++"
+            @click="showMore"
         >
             Показать еще
         </button>
@@ -30,8 +35,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-
 import HotelCard from '@/components/HotelCard.vue'
 
 export default {
@@ -39,28 +42,20 @@ export default {
     components: {
         HotelCard
     },
-    data() {
-        return {
-            page: 1
-        }
-    },
-    computed: {
-        hotels() {
-            return this.$store.getters['hotels/itemsForPreview'](this.page);
+    props: {
+        hotels: {
+            type: Array,
+            required: true
+        },
+        page: {
+            type: Number,
+            default: 3
         }
     },
     methods: {
-        ...mapMutations({
-            setHotels: 'hotels/SET_ITEMS'
-        })
-    },
-    created() {
-        const lsHotels = localStorage.getItem('hotels');
-
-        if (lsHotels) {
-            this.setHotels(JSON.parse(lsHotels));
-        } else {
-            this.$store.dispatch('hotels/fetchItems')
+        showMore() {
+            this.page++;
+            this.$emit('update:page', this.page);
         }
     }
 };
@@ -76,8 +71,13 @@ export default {
   transform: translateY(30px);
 }
 
-.hotels-preview {
+.hotels-list {
     text-align: center;
+
+    &__link {
+        color: inherit;
+        text-decoration: none;
+    }
 
     &__list {
         text-align: left;
@@ -93,7 +93,7 @@ export default {
 }
 
 @media all and (min-width: 768px) {
-    .hotels-preview {
+    .hotels-list {
         &__list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -104,7 +104,7 @@ export default {
 }
 
 @media all and (min-width: 1024px) {
-    .hotels-preview {
+    .hotels-list {
         &__list {
             grid-template-columns: repeat(3, 1fr);
         }

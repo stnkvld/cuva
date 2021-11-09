@@ -19,9 +19,9 @@
                 />
             </picture>
             <div class="hotel__content">
-                <h1 class="title hotel__title">{{ info.title }}</h1>
+                <h1 class="title hotel__title">{{ hotel.title }}</h1>
                 <p class="hotel__description">
-                    {{ info.body }}
+                    {{ hotel.body }}
                 </p>
             </div>
 
@@ -61,8 +61,6 @@
 </template>
 
 <script>
-import { getHotelInfo } from '@/api';
-
 import BookingForm from '@/components/BookingForm';
 
 export default {
@@ -73,21 +71,21 @@ export default {
     data() {
         return {
             showForm: true,
-            info: {},
+            hotel: {},
             bookingData: {}
         }
     },
     async created() {
         const id = this.$route.params.id;
-        const info = this.$store.getters['hotels/item'](id);
+        const hotel = this.$store.getters['hotels/hotel'](id);
 
         // По заданию не совсем ясно как треюбуется получать данные,
         // поэтому решил использовать вариант проверки наличия данных
         // в хранилище и, если они отсутствуют, то сделать отдельный запрос
         // на получение данных отеля, чтобы не стягивать все 100 записей
-        this.info = info
-            ? Object.assign({}, info)
-            : await getHotelInfo(id);
+        this.hotel = hotel
+            ? Object.assign({}, hotel)
+            : await this.$store.dispatch('hotels/fetchHotel', id);
     },
     methods: {
         onFormSubmit(evt) {

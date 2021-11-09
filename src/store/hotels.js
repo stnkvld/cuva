@@ -1,39 +1,49 @@
-import { getHotelsInfo } from '@/api';
+import { getHotels } from '@/api';
+import { getHotel } from '@/api';
 
 export default {
     namespaced: true,
 
     state: {
-        items: []
+        hotels: []
     },
 
     getters: {
-        itemsForPreview: (state) => (page = 1) => {
+        hotelsList: (state) => (page = 1, maxPage = 3) => {
             if (page <= 0) {
                 page = 1;
-            } else if (page > 3) {
-                page = 3;
+            } else if (page > maxPage) {
+                page = maxPage;
             }
 
-            return state.items.slice(0, page * 10);
+            return state.hotels.slice(0, page * 10);
         },
-        item: (state) => (id) => {
-            return state.items.find(item => item.id === id);
+        hotel: (state) => (id) => {
+            return state.hotels.find(item => item.id === id);
         }
     },
 
     mutations: {
-        SET_ITEMS(state, items) {
-            state.items = items;
+        SET_HOTELS(state, hotels) {
+            state.hotels = hotels;
         }
     },
 
     actions: {
-        async fetchItems({ commit }) {
+        async fetchHotels({ commit }) {
             try {
-                const hotels = await getHotelsInfo();
-                commit('SET_ITEMS', hotels);
+                const hotels = await getHotels();
+                commit('SET_HOTELS', hotels);
                 localStorage.setItem('hotels', JSON.stringify(hotels));
+            } catch (error) {
+                // Предполагается обработка ошибки и ее вывод в общие уведомления
+                console.error(error);
+            }
+        },
+        async fetchHotel(context, id) {
+            try {
+                const hotel = await getHotel(id);
+                return hotel;
             } catch (error) {
                 // Предполагается обработка ошибки и ее вывод в общие уведомления
                 console.error(error);

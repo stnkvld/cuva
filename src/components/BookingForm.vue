@@ -118,9 +118,6 @@ export default {
 
             if (this.$v.address.$invalid || this.$v.name.$invalid || this.$v.phone.$invalid) return;
 
-            // В задании не уточняется как именно должна имитироваться отправка формв,
-            // поэтому оставил таким образом.
-            // Обычно, вызывается метод API или dispatch, передаются данные формы и отправляется запрос с ними
             this.$emit('submit', {
                 address: this.address,
                 name: this.name,
